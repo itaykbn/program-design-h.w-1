@@ -6,54 +6,58 @@ namespace Homework_1
 {
     class Task2
     {
-        public List<RangeNode> CreateRangeList(List<int> sourceList)
+        public Node<RangeNode> CreateRangeList(Node<int> sourceList)
         {
-            List<RangeNode> result = new List<RangeNode>();
+            Node<RangeNode> CurrantObj = new Node<RangeNode>();
+            Node<RangeNode> result = CurrantObj;
+            
             bool seq = false;
-            int min = sourceList[0];
-            int max = 0;
-            for (int i = 0; i < sourceList.Count; i++)
+            int min = sourceList.GetValue();
+            Node<int> tmp = sourceList;
+            while (tmp != null)
             {
-                if (sourceList.Count - 1 == i)
+                int max;
+
+                if (tmp.GetNext() == null)
                 {
                     if (seq == true)
                     {
-                        max = sourceList[i];
-                        result.Add(new RangeNode(min, max));
-                    }
-                    else
-                    {
-                        result.Add(new RangeNode(sourceList[i], sourceList[i]));
-                    }
-                }
-
-
-                else if (sourceList[i] + 1 == sourceList[i + 1])
-                    {
-                        max = sourceList[i];
-                        seq = true;
-                    }
-               
-                else
-                {
-                    if (seq == true)
-                    {
-                        max = sourceList[i];
-                        result.Add(new RangeNode(min, max));
+                        max = tmp.GetValue();
+                        CurrantObj.SetNext(new Node<RangeNode>(new RangeNode(min, max)));
                         seq = false;
                     }
                     else
                     {
-                        result.Add(new RangeNode(sourceList[i], sourceList[i]));
+                        CurrantObj.SetNext(new Node<RangeNode>(new RangeNode(tmp.GetValue(), tmp.GetValue())));
                     }
 
-                        min = sourceList[i + 1];
-                    
-
-
                 }
+
+                else if (tmp.GetValue() + 1 == tmp.GetNext().GetValue())
+                {
+                    seq = true;
+                }
+
+                else
+                {
+
+                    if (seq == true)
+                    {
+                        max = tmp.GetValue();
+                        CurrantObj.SetNext(new Node<RangeNode>(new RangeNode(min,max)));
+                        seq = false;
+                    }
+                    else
+                    {
+                        CurrantObj.SetNext(new Node<RangeNode>(new RangeNode(tmp.GetValue(), tmp.GetValue())));
+                    }
+
+                    min = tmp.GetNext().GetValue();
+                    CurrantObj = CurrantObj.GetNext();
+                }
+                tmp = tmp.GetNext();
             }
-            return result;
+            return result.GetNext();
         }
 
         public class RangeNode

@@ -50,11 +50,11 @@ namespace Homework_1
             return (next != null);
         }
 
-        public void Add(T value)
-        {
-            Node<T> copy_node = this;
-            SetNext(new Node<T>(value, copy_node.GetNext()));
-        }
+        //public void Add(T value)
+        //{
+        //    Node<T> copy_node = this;
+        //    SetNext(new Node<T>(value, copy_node.GetNext()));
+        //}
     }
 
     public static class NodeExtensions

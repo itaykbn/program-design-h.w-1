@@ -8,39 +8,41 @@ namespace Homework_1
     {
         public string GetStudentsAvg(Node<Student> DB)
         {
+            Node<Student> copyDB = DB;
             string finalString = "\n----Avreges----\n";
-            int DBLength = DB.GetSize();
-            for (int i = 0; i < DBLength; i++)
+            while (copyDB != null)
             {
-                int GradesLength = DB.GetValue().Grades.GetSize();
+                int GradesLength = copyDB.GetValue().Grades.GetSize();
                 double sum = 0;
                 string courses = "Coureses: ";
-                for (int j = 0; j < GradesLength; j++)
+
+                Node<Grade> tmp = copyDB.GetValue().Grades;
+                while (tmp != null)
                 {
-                    sum += DB.GetValue().Grades.GetValue().Precentage;
-                    courses += DB.GetValue().Grades.GetValue().CourseId + "; ";
-
-                    DB.GetValue().Grades = DB.GetValue().Grades.GetNext();
-
+                    sum += tmp.GetValue().Precentage;
+                    courses += tmp.GetValue().CourseId + "; ";
+                    tmp = tmp.GetNext();
                 }
-                finalString += $"\n---- {DB.GetValue().ToString()} ----\n{courses}\nTotal avarage: {sum / GradesLength}\n";
-                DB = DB.GetNext();
+
+                finalString += $"\n---- {copyDB.GetValue().ToString()} ----\n{courses}\nTotal avarage: {sum / GradesLength}\n";
+
+                copyDB = copyDB.GetNext();
             }
             return finalString;
         }
 
-        public KeyValuePair<int,double> GetBestAvgCourse(Node<Student> DB)
+        public KeyValuePair<int, double> GetBestAvgCourse(Node<Student> DB)
         {
             Dictionary<int, List<double>> courseDict = new Dictionary<int, List<double>>();
+            Node<Student> copyDB = DB;
 
-            int DBLength = DB.GetSize();
-            for (int i = 0; i < DBLength; i++)
+            while (copyDB != null)
             {
-                int GradesLength = DB.GetValue().Grades.GetSize();
-                for (int j = 0; j < GradesLength; j++)
+                Node<Grade> tmp = copyDB.GetValue().Grades;
+                while (tmp != null)
                 {
-                    int courseId = DB.GetValue().Grades.GetValue().CourseId;
-                    double grade = DB.GetValue().Grades.GetValue().Precentage;
+                    int courseId = tmp.GetValue().CourseId;
+                    double grade = tmp.GetValue().Precentage;
                     if (courseDict.ContainsKey(courseId))
                     {
                         courseDict[courseId].Add(grade);
@@ -50,24 +52,22 @@ namespace Homework_1
                         courseDict[courseId] = new List<double> { grade };
                     }
 
-                    DB.GetValue().Grades = DB.GetValue().Grades.GetNext();
+                    tmp = tmp.GetNext();
 
                 }
-                DB = DB.GetNext();
+                copyDB = copyDB.GetNext();
             }
 
             KeyValuePair<int, double> maxAvgCourse = new KeyValuePair<int, double>(int.MinValue, double.MinValue);
             foreach (KeyValuePair<int, List<double>> entry in courseDict)
             {
                 double currentAvg = GetListAvg(entry.Value);
-                if(currentAvg > maxAvgCourse.Value)
+                if (currentAvg > maxAvgCourse.Value)
                 {
                     maxAvgCourse = new KeyValuePair<int, double>(entry.Key, currentAvg);
                 }
             }
-
             return maxAvgCourse;
-
         }
         private double GetListAvg(List<double> list)
         {
