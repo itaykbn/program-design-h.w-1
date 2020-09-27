@@ -17,7 +17,7 @@ namespace Homework_1
         private static void _Task2()
         {
             Task2 task2 = new Task2();
-            Data data = new Data();
+            Data data = Data.Instance;
             Node<Task2.RangeNode> rangeList = task2.CreateRangeList(data.Sequence);
 
             Node<Task2.RangeNode> tmp = rangeList;
@@ -38,7 +38,8 @@ namespace Homework_1
         private static void _Task48()
         {
             Task48 task48 = new Task48();
-            Data data = new Data();
+
+            Data data = Data.Instance;
 
             Console.WriteLine(task48.GetRepresentation(data.Representation).GetString());
         }
@@ -48,8 +49,7 @@ namespace Homework_1
 
             Task53 task53 = new Task53();
 
-            Data data = new Data();
-            //Data pull2 = new Data();
+            Data data = Data.Instance;
 
             string result1 = task53.GetStudentsAvg(data.GradeDB);
             Console.WriteLine(result1);
@@ -63,9 +63,32 @@ namespace Homework_1
     }
     class Data
     {
-        // ------------------------------------ task 53 ------------------------------------//
+        private static Data instance = null;
+        private static readonly object padLock = new object();
 
-        private static Node<Task53.Grade> gradeItay =
+        private Data()
+        {
+        }
+
+        public static Data Instance
+        {
+            get
+            {
+                lock (padLock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new Data();
+                    }
+                    return instance;
+                }
+            }
+        }
+    
+
+    // ------------------------------------ task 53 ------------------------------------//
+
+    private static Node<Task53.Grade> gradeItay =
                 new Node<Task53.Grade>(new Task53.Grade(8819516, 80),
                 new Node<Task53.Grade>(new Task53.Grade(8819517, 85),
                 new Node<Task53.Grade>(new Task53.Grade(8819518, 90))));
