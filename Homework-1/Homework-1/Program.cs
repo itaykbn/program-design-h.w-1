@@ -7,11 +7,12 @@ namespace Homework_1
     {
         static void Main(string[] args)
         {
-            _Task2();
+            //_Task2();
 
             //_Task48();
 
             //_Task53();
+            _Task14();
         }
 
         private static void _Task2()
@@ -32,7 +33,7 @@ namespace Homework_1
             }
             finalString += "Null";
             Console.WriteLine(finalString);
-           
+
         }
 
         private static void _Task48()
@@ -60,77 +61,15 @@ namespace Homework_1
             Console.WriteLine($"Best average course: {result2.Key}; Avarge: {result2.Value}");
 
         }
-    }
-    class Data
-    {
-        private static Data instance = null;
-        private static readonly object padLock = new object();
 
-        private Data()
+        private static void _Task14()
         {
+            Task14 task14 = new Task14();
+            Data data = Data.Instance;
+            Console.WriteLine(task14.BiggestBuildings(data.Buildings));
+
+
+
         }
-
-        public static Data Instance
-        {
-            get
-            {
-                lock (padLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new Data();
-                    }
-                    return instance;
-                }
-            }
-        }
-    
-
-    // ------------------------------------ task 53 ------------------------------------//
-
-    private static Node<Task53.Grade> gradeItay =
-                new Node<Task53.Grade>(new Task53.Grade(8819516, 80),
-                new Node<Task53.Grade>(new Task53.Grade(8819517, 85),
-                new Node<Task53.Grade>(new Task53.Grade(8819518, 90))));
-
-
-        private static Node<Task53.Grade> gradeMiki =
-        new Node<Task53.Grade>(new Task53.Grade(8819516, 79.3),
-        new Node<Task53.Grade>(new Task53.Grade(8819517, 87.4),
-        new Node<Task53.Grade>(new Task53.Grade(8819518, 88.25))));
-
-
-
-
-        public readonly Node<Task53.Student> GradeDB = new Node<Task53.Student>(new Task53.Student("Itay", 987264534, 2020, gradeItay),
-                new Node<Task53.Student>(new Task53.Student("Miki", 487264534, 2020, gradeMiki)));
-        // ------------------------------------ task 53 ------------------------------------//
-
-
-        // ------------------------------------ task 48 ------------------------------------//
-
-        public readonly Node<Task48.TupleStrInt> Representation =
-                new Node<Task48.TupleStrInt>(new Task48.TupleStrInt("R", 1),
-                new Node<Task48.TupleStrInt>(new Task48.TupleStrInt("L", 3),
-                new Node<Task48.TupleStrInt>(new Task48.TupleStrInt("S", 4))));
-        // ------------------------------------ task 48 ------------------------------------//
-
-
-        // ------------------------------------ task 2 ------------------------------------//
-
-        public readonly Node<int> Sequence =
-                new Node<int>(3,
-                new Node<int>(4,
-                new Node<int>(5,
-                new Node<int>(12,
-                new Node<int>(19,
-                new Node<int>(20,
-                new Node<int>(100,
-                new Node<int>(101,
-                new Node<int>(102,
-                new Node<int>(103,
-                new Node<int>(104)))))))))));
-
-        // ------------------------------------ task 2 ------------------------------------//
     }
 }
